@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "cells": {
+    "9-6": {
+      "principles": [24, 26],
+      "confidence": "moderate",
+      "sources": ["rea-1999"],
+      "notes": "Rea's Win32 telecom example: automated mediator copies spec changes to XML, eliminating manual C++ header-file updates and the human-error accuracy loss they caused"
+    },
+    "16-5": {
+      "principles": [35],
+      "confidence": "moderate",
+      "sources": ["ijosi-review"],
+      "notes": "Proxy pattern (GoF–TRIZ mapping by Domb & Stamey): substituting a resource-heavy secure object with a lightweight configurable proxy changes the instantiation cost parameter without altering the interface"
+    },
+    "19-10": {
+      "principles": [1, 5, 10, 25],
+      "confidence": "weak",
+      "sources": ["mann-2011"],
+      "notes": "Distributed microservices example cited by Mann: two-phase commit increases complexity while risking data loss; principles inferred from Mann's framework on distributed data integrity"
+    },
+    "5-2": {
+      "principles": [17],
+      "confidence": "moderate",
+      "sources": ["ijosi-review"],
+      "notes": "Flyweight pattern (GoF–TRIZ mapping by Domb & Stamey): shared intrinsic state is projected into an external pool (Another Dimension) to preserve execution speed while minimising runtime memory"
+    }
+  }
+}
