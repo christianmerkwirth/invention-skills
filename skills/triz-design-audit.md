@@ -13,7 +13,6 @@ A path to a design document, a module path, or a natural language description of
 
 ## Reference data used
 - `reference/principles.md`
-- `reference/gof-mappings.md`
 - `reference/matrix.json` (when the audit surfaces a candidate contradiction)
 
 ## Procedure

@@ -155,13 +155,17 @@ def test_edited_body_triggers_only_that_skill_rewrite_gemini(repo_layout: Path, 
     gemini_main(["--target", str(target)])
     capsys.readouterr() # clear
     
+    mtime_b = (target / "triz" / "commands" / "skill-b.toml").stat().st_mtime
+    
     # Edit skill-a
     (repo_layout / "skills" / "skill-a.md").write_text("---\nname: skill-a\ndescription: A\nversion: 0.1.0\n---\nBody A CHANGED", encoding="utf-8")
     
     gemini_main(["--target", str(target)])
     out = capsys.readouterr().out
-    assert "updated: skill-a" in out
-    assert "up-to-date: skill-b" in out
+    assert "updated: triz" in out
+    
+    new_mtime_b = (target / "triz" / "commands" / "skill-b.toml").stat().st_mtime
+    assert mtime_b == new_mtime_b
 
 def test_changed_reference_triggers_reference_rewrite_in_all_skills(repo_layout: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr("install.install_claude_code._repo_root", lambda: repo_layout)

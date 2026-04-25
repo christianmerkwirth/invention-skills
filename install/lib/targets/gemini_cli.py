@@ -22,50 +22,55 @@ class EmittedFile:
     content: bytes
 
 
-def emit(skill: Skill, target_root: Path, reference_files: list[Path]) -> list[EmittedFile]:
-    """Compute the files that should exist for `skill` as a Gemini extension under `target_root`.
+def emit(skills: list[Skill], target_root: Path, reference_files: list[Path]) -> list[EmittedFile]:
+    """Compute the files that should exist for `skills` as a single 'triz' Gemini extension under `target_root`.
     
     Pre: target_root is an absolute path (may not yet exist).
     Post: returns:
-      - <target_root>/<skill.name>/gemini-extension.json
-      - <target_root>/<skill.name>/commands/<skill.name>.toml
-      - <target_root>/<skill.name>/reference/<file> for each reference file
+      - <target_root>/triz/gemini-extension.json
+      - <target_root>/triz/commands/<skill.name>.toml for each skill
+      - <target_root>/triz/reference/<file> for each reference file
     Does NOT touch the filesystem.
     """
-    if '"""' in skill.body:
-        raise EmitError(f"Skill body for {skill.name} contains '\"\"\"' which conflicts with TOML triple quotes.")
-    
-    skill_dir = target_root / skill.name
+    if not skills:
+        return []
+
+    ext_name = "triz"
+    ext_dir = target_root / ext_name
     results = []
 
     # gemini-extension.json
     manifest = {
-        "name": skill.name,
-        "version": skill.version,
-        "description": skill.description
+        "name": ext_name,
+        "version": skills[0].version,
+        "description": "TRIZ skills for software engineering"
     }
     manifest_bytes = json.dumps(manifest, indent=2).encode("utf-8")
     results.append(EmittedFile(
-        path=skill_dir / "gemini-extension.json",
+        path=ext_dir / "gemini-extension.json",
         content=manifest_bytes
     ))
 
     # commands/<skill.name>.toml
-    # Ensure description double-quotes are escaped if any
-    safe_description = skill.description.replace('"', '\\"')
-    command_toml = (
-        f'description = "{safe_description}"\n'
-        f'prompt = """\n{skill.body}\n"""\n'
-    )
-    results.append(EmittedFile(
-        path=skill_dir / "commands" / f"{skill.name}.toml",
-        content=command_toml.encode("utf-8")
-    ))
+    for skill in skills:
+        if '"""' in skill.body:
+            raise EmitError(f"Skill body for {skill.name} contains '\"\"\"' which conflicts with TOML triple quotes.")
+        
+        # Ensure description double-quotes are escaped if any
+        safe_description = skill.description.replace('"', '\\"')
+        command_toml = (
+            f'description = "{safe_description}"\n'
+            f'prompt = """\n{skill.body}\n"""\n'
+        )
+        results.append(EmittedFile(
+            path=ext_dir / "commands" / f"{skill.name}.toml",
+            content=command_toml.encode("utf-8")
+        ))
 
     # reference files
     for ref_file in reference_files:
         results.append(EmittedFile(
-            path=skill_dir / "reference" / ref_file.name,
+            path=ext_dir / "reference" / ref_file.name,
             content=ref_file.read_bytes()
         ))
     

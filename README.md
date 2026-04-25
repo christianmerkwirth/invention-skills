@@ -139,7 +139,7 @@ def install_for_my_cli():
 - `tests/` — Test suite for the installers and source loaders.
 
 ## Reference data
-The `reference/` directory contains JSON and Markdown files loaded by skills during execution to map problems to TRIZ solutions. This includes `parameters.md` for parameter definitions, `matrix.json` for the contradiction matrix, `principles.md` for inventive principles, and `gof-mappings.md` for corresponding software design patterns. These files must be accessible relative to the installed skill's root at `reference/<file>`.
+The `reference/` directory contains JSON and Markdown files loaded by skills during execution to map problems to TRIZ solutions. This includes `parameters.md` for parameter definitions, `matrix.json` for the contradiction matrix, and `principles.md` for inventive principles. These files must be accessible relative to the installed skill's root at `reference/<file>`.
 
 ## Testing
 Run the test suite using pytest:

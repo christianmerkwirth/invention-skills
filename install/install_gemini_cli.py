@@ -66,24 +66,23 @@ def main(argv: list[str] | None = None) -> int:
 
     prefix = "[dry-run] " if args.dry_run else ""
 
-    for skill in skills:
-        try:
-            emitted_files = emit(skill, target_root, reference_files)
-        except EmitError as e:
-            print(f"error: emitting {skill.name}: {e}", file=sys.stderr)
-            return 1
-        
-        # Calculate skill level status based on file level statuses
-        skill_status = "up-to-date"
-        for emitted in emitted_files:
-            file_status = _write_file(emitted, args.dry_run)
-            if file_status == "installed" and skill_status != "updated":
-                skill_status = "installed"
-            elif file_status == "updated":
-                skill_status = "updated"
+    try:
+        emitted_files = emit(skills, target_root, reference_files)
+    except EmitError as e:
+        print(f"error: emitting triz extension: {e}", file=sys.stderr)
+        return 1
+    
+    # Calculate extension level status based on file level statuses
+    ext_status = "up-to-date"
+    for emitted in emitted_files:
+        file_status = _write_file(emitted, args.dry_run)
+        if file_status == "installed" and ext_status != "updated":
+            ext_status = "installed"
+        elif file_status == "updated":
+            ext_status = "updated"
 
-        skill_dir = target_root / skill.name
-        print(f"{prefix}{skill_status}: {skill.name} -> {skill_dir}")
+    ext_dir = target_root / "triz"
+    print(f"{prefix}{ext_status}: triz -> {ext_dir}")
 
     return 0
 

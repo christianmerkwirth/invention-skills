@@ -1,4 +1,4 @@
-# IT-TRIZ Parameters (21)
+# The 21 IT-TRIZ Parameters
 
 | ID | Name | One-line scope |
 |----|------|----------------|

@@ -14,7 +14,6 @@ A free-text query from the user (e.g., "show me principle 24", "what's parameter
 ## Reference data used
 - `reference/parameters.md` (lazy load only what the query needs)
 - `reference/principles.md` (lazy load only what the query needs)
-- `reference/gof-mappings.md` (lazy load only what the query needs)
 
 ## Procedure
 1. Receive input query from the user.

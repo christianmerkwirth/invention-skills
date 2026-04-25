@@ -41,8 +41,6 @@ def repo_layout(tmp_path: Path) -> Path:
     (ref_dir / "parameters.md").write_text("# Parameters\n", encoding="utf-8")
     (ref_dir / "principles.md").write_text("# Principles\n", encoding="utf-8")
     (ref_dir / "matrix.json").write_text("{}\n", encoding="utf-8")
-    (ref_dir / "gof-mappings.md").write_text("# GoF\n", encoding="utf-8")
-    (ref_dir / "matrix-sources.md").write_text("# Sources\n", encoding="utf-8")
 
     return tmp_path
 

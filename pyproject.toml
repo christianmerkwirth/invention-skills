@@ -1,7 +1,7 @@
 [project]
-name = "invention-skills-installer"
+name = "triz-skills-installer"
 version = "0.1.0"
-description = "Installer library for TRIZ invention-skills suite"
+description = "Installer library for TRIZ skills suite"
 requires-python = ">=3.10"
 # No runtime dependencies — stdlib only (Design Decision: no PyYAML, no Pydantic).
 dependencies = []
