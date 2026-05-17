@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(python *)",
-      "Bash(ln -sf ../../reference __TRACKED_VAR__/reference)"
+      "Bash(ln -sf ../../reference __TRACKED_VAR__/reference)",
+      "WebSearch",
+      "WebFetch(domain:antigravity.google)",
+      "WebFetch(domain:google-gemini.github.io)",
+      "WebFetch(domain:codelabs.developers.google.com)"
     ]
   }
 }

@@ -1,6 +1,6 @@
-# TRIZ Skills for Claude Code
+# TRIZ Skills
 
-A suite of Claude Code skills that bring the Theory of Inventive Problem Solving (TRIZ) into software engineering workflows: systematically resolving contradictions, auditing designs, and improving system ideality.
+A suite of [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) that bring the Theory of Inventive Problem Solving (TRIZ) into software engineering workflows: systematically resolving contradictions, auditing designs, and improving system ideality. Works with Claude Code and Google Antigravity, which both consume the canonical `SKILL.md` format unchanged.
 
 ## Skills
 
@@ -12,28 +12,50 @@ A suite of Claude Code skills that bring the Theory of Inventive Problem Solving
 
 ## Install
 
-Each directory under `skills/` is already a valid Claude Code skill (a `SKILL.md` plus a `reference/` symlink to the shared `reference/` data). Install by copying or symlinking into `~/.claude/skills/`:
+Each directory under `skills/` is already a valid Agent Skill (a `SKILL.md` plus a `reference/` symlink to the shared reference data). Install by symlinking or copying into the host tool's skills directory.
+
+### Claude Code
 
 ```bash
-# Live-link from this checkout (recommended — picks up git pulls automatically):
+# Live-link from this checkout (picks up git pulls automatically):
 mkdir -p ~/.claude/skills
 for d in skills/*/; do ln -sfn "$(pwd)/$d" ~/.claude/skills/"$(basename "$d")"; done
 
-# Or copy (snapshot — re-run after each git pull):
+# Or snapshot copy (re-run after each git pull):
 cp -rL skills/* ~/.claude/skills/
 ```
 
-Both forms are idempotent. Use `cp -rL` (capital L) so the `reference/` symlinks are dereferenced into real directories at the destination.
+### Google Antigravity
+
+Antigravity consumes the same canonical `SKILL.md` format. Only the destination differs:
+
+```bash
+# Global install (live-linked):
+mkdir -p ~/.gemini/antigravity/skills
+for d in skills/*/; do ln -sfn "$(pwd)/$d" ~/.gemini/antigravity/skills/"$(basename "$d")"; done
+
+# Or per-workspace install:
+mkdir -p .agents/skills
+for d in skills/*/; do ln -sfn "$(pwd)/$d" .agents/skills/"$(basename "$d")"; done
+```
+
+See the [Antigravity Skills docs](https://antigravity.google/docs/skills) for details.
+
+Both forms are idempotent. Use `cp -rL` (capital L) when copying so the `reference/` symlinks are dereferenced into real directories at the destination.
+
+### Gemini CLI (not directly supported)
+
+Gemini CLI's [extension format](https://google-gemini.github.io/gemini-cli/docs/extensions/) is different — it expects a `gemini-extension.json` manifest plus TOML command files, not `SKILL.md`. There is no canonical-format install for Gemini CLI. If you need it, you can hand-wrap each skill as a Gemini extension by embedding the `SKILL.md` body into a `commands/<name>.toml` `prompt` field.
 
 ## Using a skill
 
-Once installed, invoke through Claude Code:
+Once installed, invoke through your agent:
 
 ```
 Use triz-contradiction. I want to improve speed, but that worsens security. Scope: backend/auth.
 ```
 
-Claude consults the TRIZ contradiction matrix, maps the concepts to software parameters, and suggests an architectural principle (e.g. "Segmentation", "Prior Action") with a proposed code diff.
+The agent consults the TRIZ contradiction matrix, maps the concepts to software parameters, and suggests an architectural principle (e.g. "Segmentation", "Prior Action") with a proposed code diff.
 
 ## Authoring a new skill
 
