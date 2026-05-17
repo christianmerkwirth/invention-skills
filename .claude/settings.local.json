@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(ln -sf ../../reference __TRACKED_VAR__/reference)"
     ]
   }
 }
