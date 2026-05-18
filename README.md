@@ -25,9 +25,14 @@ for d in skills/*/; do ln -sfn "$(pwd)/$d" ~/.claude/skills/"$(basename "$d")"; 
 cp -rL skills/* ~/.claude/skills/
 ```
 
-### Google Antigravity
+### Google Antigravity / Jetski
 
-Antigravity consumes the same canonical `SKILL.md` format. Only the destination differs:
+Antigravity (and Google-internal Jetski) consume the same canonical `SKILL.md` format. Only the destination differs — expand the section that matches your setup:
+
+<details>
+<summary>Antigravity</summary>
+
+Skills are installed into `~/.gemini/antigravity/skills/`.
 
 ```bash
 # Global install (live-linked):
@@ -40,6 +45,25 @@ for d in skills/*/; do ln -sfn "$(pwd)/$d" .agents/skills/"$(basename "$d")"; do
 ```
 
 See the [Antigravity Skills docs](https://antigravity.google/docs/skills) for details.
+
+</details>
+
+<details>
+<summary>Jetski (Google-internal)</summary>
+
+Skills are installed into `~/.gemini/jetski/skills/`.
+
+```bash
+# Global install (live-linked):
+mkdir -p ~/.gemini/jetski/skills
+for d in skills/*/; do ln -sfn "$(pwd)/$d" ~/.gemini/jetski/skills/"$(basename "$d")"; done
+
+# Or per-workspace install:
+mkdir -p .agents/skills
+for d in skills/*/; do ln -sfn "$(pwd)/$d" .agents/skills/"$(basename "$d")"; done
+```
+
+</details>
 
 Both forms are idempotent. Use `cp -rL` (capital L) when copying so the `reference/` symlinks are dereferenced into real directories at the destination.
 
